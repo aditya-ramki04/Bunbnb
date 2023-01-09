@@ -17,7 +17,6 @@ app.use(express.json());
 
 const routes = require('./routes');
 
-
 // Security Middleware
 if (!isProduction) {
     // enable cors only in development
