@@ -7,7 +7,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     static associate(models) {
-      Spot.belongsTo(models.User, {foreignKey: 'ownerId'})
+      
     }
   }
   Spot.init({
