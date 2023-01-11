@@ -10,8 +10,8 @@ module.exports = {
         city: 'New Dop',
         state: 'New York',
         country: 'USA',
-        lat: '40.7128',
-        lng: '74.0060',
+        lat: 40.7128,
+        lng: 74.0060,
         name: 'Dawg House',
         description: 'A place for people with that dawg in em to gather...real ones only',
         price: 500
@@ -22,8 +22,8 @@ module.exports = {
         city: 'Los Angeles',
         state: 'California',
         country: 'USA',
-        lat: '78.7128',
-        lng: '12.0060',
+        lat: 78.7128,
+        lng: 12.0060,
         name: 'The GUS house',
         description: 'Dogs with absurdly long legs only',
         price: 1000
@@ -34,8 +34,8 @@ module.exports = {
         city: 'Ballwin',
         state: 'Missouri',
         country: 'USA',
-        lat: '237.7128',
-        lng: '09.0060',
+        lat: 37.7128,
+        lng: 90.0060,
         name: 'Oompa',
         description: 'Welcome to asian dog household',
         price: 300
@@ -46,15 +46,14 @@ module.exports = {
         city: 'Houston',
         state: 'Texas',
         country: 'USA',
-        lat: '124.1234',
-        lng: '40.6575',
+        lat: 24.1234,
+        lng: 40.6575,
         name: 'Racing House',
         description: 'Fast dogs love it here',
         price: 200
       }
     ], {});
   },
-
   async down (queryInterface, Sequelize) {
    return queryInterface.bulkDelete('Spots',null,{});
   }
