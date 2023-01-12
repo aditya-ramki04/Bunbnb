@@ -17,7 +17,7 @@ module.exports = {
         price: 500
       },
       {
-        ownerId: 2,
+        ownerId: 4,
         address: '456 Gus Drive',
         city: 'Los Angeles',
         state: 'California',

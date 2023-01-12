@@ -4,7 +4,7 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { Spot, Review, ReviewImage, SpotImage, User, Booking, sequelize} = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const user = require('../../db/models/user');
+const {user} = require('../../db/models/user');
 const { Op } = require('sequelize');
 
 const router = express.Router();
@@ -13,7 +13,6 @@ const router = express.Router();
 //GET ALL SPOTS AUTH FALSE
 router.get('/', async(req,res) => {
     let allSpots = await Spot.findAll({
-
       //add avgRating
       attributes: {
         include: [
@@ -31,6 +30,41 @@ router.get('/', async(req,res) => {
     res.json(allSpots)
 })
 
+//CREATE A SPOT
+router.post('/', requireAuth, async (req, res) => {
+  const { user } = req
+  const { address, city, state, country, lat, lng, name, description, price } = req.body
+  const newSpot = await Spot.create({
+    address, city, state, country, lat, lng, name, description, price, ownerId: user.id
+  });
+
+  res.json(newSpot)
+})
+
+
+//GET ALL SPOTS OWNED BY CURRENT USER
+router.get('/current', requireAuth, async(req,res) => {
+  const { user } = req
+  let allSpots = await Spot.findAll({
+    where: {
+      ownerId: user.id
+    },
+    //add avgRating
+    attributes: {
+      include: [
+          [
+            sequelize.fn("AVG", sequelize.col('Reviews.stars')), "avgRating"
+          ],
+      ],
+    },
+      include: {
+          model: Review,
+          attributes: []
+      },
+      group: ['Spot.id']
+  })
+  res.json(allSpots)
+})
 
 //GET DETAILS OF A SPOT FROM AN ID
 router.get('/:spotId', async(req,res) => {
@@ -53,7 +87,7 @@ router.get('/:spotId', async(req,res) => {
     }
   })
   //avgStarRating
-spotDetails.avgStarRating = (await Review.sum(('stars'),{
+spotDetails.avgStarRating = (await Review.sum(('stars'),{ //alright tristan
   where: {
     spotId : Number(req.params.spotId)
   }
@@ -71,7 +105,6 @@ spotDetails.avgStarRating = (await Review.sum(('stars'),{
 
   res.json(spotDetails)
 })
-
 
 
 module.exports = router;
