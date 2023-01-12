@@ -89,7 +89,6 @@ const validateQueries = [
     .withMessage('Please provide a valid maxPrice value')
 ]
 
-
 //CREATE A SPOT
 router.post('/', requireAuth, validateSpotInfo, async (req, res) => {
   const { user } = req
@@ -99,6 +98,33 @@ router.post('/', requireAuth, validateSpotInfo, async (req, res) => {
   });
 
   res.json(newSpot)
+})
+
+//ADD IMAGE TO SPOT BASED ON SPOT ID
+router.post('/:spotId/images', requireAuth, async (req, res) => {
+  const {user} = req
+  const {url, preview} = req.body
+  const spot = await Spot.findByPk(req.params.spotId)
+
+  if(spot){
+    if(user.id === spot.ownerId)
+    {
+      const newSpotImage = await SpotImage.create({
+        url,preview,spotId: req.params.spotId
+      })
+      res.json(newSpotImage)
+    }
+    else
+    res.json('Spot must belong to current user')
+  }
+  else
+  {
+    return res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+  })
+  }
+
 })
 
 //GET ALL SPOTS OWNED BY CURRENT USER
