@@ -64,30 +64,6 @@ const validateReview = [
   handleValidationErrors
 ];
 
-const validateQueries = [
-  query('page')
-    .isInt({ min: 0, max: 10 })
-    .withMessage('Please provide a valid page'),
-  query('size')
-    .isInt({ min: 0, max: 10 })
-    .withMessage('Please provide a valid size'),
-  query('minLat')
-    .optional()
-    .isFloat({ min: -90, max: 90 })
-    .withMessage('Please provide a valid minLat value'),
-  query('minLng')
-    .optional()
-    .isFloat({ min: -180, max: 180 })
-    .withMessage('Please provide a valid minLng value'),
-  query('minPrice')
-    .optional()
-    .isFloat({ min: 0 })
-    .withMessage('Please provide a valid minPrice value'),
-  query('maxPrice')
-    .optional()
-    .isFloat({ min: 0 })
-    .withMessage('Please provide a valid maxPrice value')
-]
 
 //CREATE A SPOT
 router.post('/', requireAuth, validateSpotInfo, async (req, res) => {
@@ -124,7 +100,33 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
       statusCode: 404
   })
   }
+})
 
+
+
+//EDIT A SPOT
+router.put('/:spotId', requireAuth, validateSpotInfo, async(req,res) => {
+  const { user } = req
+  const { address, city, state, country, lat, lng, name, description, price } = req.body
+  const spot = await Spot.findByPk(req.params.spotId)
+
+  if(spot){
+    if(user.id === spot.ownerId){
+      const updateSpot = await Spot.update({
+        address, city, state, country, lat, lng, name, description, price, ownerId: user.id
+      }, {where: {id: req.params.spotId}});
+      res.json(updateSpot)
+    }
+    else
+    res.json('Spot must belong to current user')
+  }
+  else
+  {
+    return res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+  })
+  }
 })
 
 //GET ALL SPOTS OWNED BY CURRENT USER
@@ -209,6 +211,35 @@ router.get('/', async(req,res) => {
       group: ['Spot.id']
   })
   res.json(allSpots)
+})
+
+//DELETE A SPOT
+router.delete('/:spotId', requireAuth, async(req,res) => {
+  const { user } = req
+  const spot = await Spot.findByPk(req.params.spotId)
+
+  if(spot){
+    if(user.id === spot.ownerId){
+      await Spot.destroy({
+        where: {
+          id: req.params.spotId
+        }
+      })
+      res.json({
+        message: "Successfully deleted",
+        statusCode: 200
+      })
+    }
+    else
+    res.json('Spot must belong to current user')
+  }
+  else
+  {
+    return res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+  })
+  }
 })
 
 module.exports = router;
