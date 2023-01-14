@@ -102,8 +102,6 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
   }
 })
 
-
-
 //EDIT A SPOT
 router.put('/:spotId', requireAuth, validateSpotInfo, async(req,res) => {
   const { user } = req
@@ -241,5 +239,39 @@ router.delete('/:spotId', requireAuth, async(req,res) => {
   })
   }
 })
+
+
+//Create a Review for a Spot based on the Spot's Id
+router.post('/:spotId/reviews', requireAuth, validateReview, async(req,res) => {
+  const {user} = req
+  const {review,stars} = req.body
+  const spot = await Spot.findByPk(req.params.spotId)
+
+  //if user already submitted review
+  const findReview = await Review.findAll({
+    where: {spotId: req.params.spotId, userId: user.id}
+  })
+  if(findReview.length > 0){
+    res.statusCode = 403
+    return res.json({message: "review already exists from current user",
+  statusCode: 403})
+  }
+
+    //spot exists
+  if(spot){
+      const newReview = await Review.create({
+        review,stars, userId: user.id, spotId: req.params.spotId
+      })
+      res.json(newReview)
+  }
+  else{
+    return res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+  })
+  }
+})
+
+
 
 module.exports = router;
