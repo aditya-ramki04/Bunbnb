@@ -7,7 +7,7 @@ const { body } = require('express-validator');
 const { query } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const {user} = require('../../db/models/user');
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 
 const router = express.Router();
 
@@ -36,9 +36,61 @@ router.get('/current', requireAuth, async(req,res) => { //need to add reviewImag
       model: Spot,ReviewImage
     }
   })
-
-
-  res.json(allReviews)
 })
 
-  module.exports = router;
+//EDIT A REVIEW
+router.put('/:reviewId', requireAuth, validateReview, async(req,res) => {
+  const { user } = req
+  const {review, stars} = req.body
+  const checkReview = await Review.findByPk(req.params.reviewId)
+  if(checkReview){
+    if(checkReview.userId === user.id){
+      const updateReview = await Review.update({review,stars},
+        {
+          where: {
+            id: req.params.reviewId
+          }
+        }
+        )
+      res.json(await Review.findByPk(req.params.reviewId))
+    }
+  }
+  else
+  {
+    return res.json({
+      message: "Review couldn't be found",
+      statusCode: 404
+  })
+  }
+})
+
+//DELETE REVIEW
+router.delete('/:reviewId', requireAuth, async(req,res) => {
+  const { user } = req
+  const review = await Review.findByPk(req.params.reviewId)
+
+  if(review){
+    if(user.id === review.userId){
+      await Review.destroy({
+        where: {
+          id: req.params.reviewId
+        }
+      })
+      res.json({
+        message: "Successfully deleted",
+        statusCode: 200
+      })
+    }
+    else
+    res.json('Review must belong to current user')
+  }
+  else
+  {
+    return res.json({
+      message: "Review couldn't be found",
+      statusCode: 404
+  })
+  }
+})
+
+module.exports = router;

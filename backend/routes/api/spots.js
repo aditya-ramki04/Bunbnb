@@ -113,7 +113,7 @@ router.put('/:spotId', requireAuth, validateSpotInfo, async(req,res) => {
       const updateSpot = await Spot.update({
         address, city, state, country, lat, lng, name, description, price, ownerId: user.id
       }, {where: {id: req.params.spotId}});
-      res.json(updateSpot)
+      res.json(await Spot.findByPk(req.params.spotId))
     }
     else
     res.json('Spot must belong to current user')
@@ -272,6 +272,29 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req,res) => {
   }
 })
 
+
+//GET ALL REVIEWS BY A SPOT'S ID
+router.get('/:spotId/reviews', async(req,res) => { //need to add reviewImage column
+  const spot = await Spot.findByPk(req.params.spotId)
+
+  if(spot){
+    const allReviews = await Review.findAll({
+      where: {
+        spotId: req.params.spotId
+      },
+      include: {
+        model: User,ReviewImage
+      }
+    })
+    res.json(allReviews)
+  }
+  else{
+    return res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+  })
+  }
+})
 
 
 module.exports = router;
