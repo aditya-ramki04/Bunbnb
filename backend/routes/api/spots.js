@@ -64,7 +64,6 @@ const validateReview = [
   handleValidationErrors
 ];
 
-
 //CREATE A SPOT
 router.post('/', requireAuth, validateSpotInfo, async (req, res) => {
   const { user } = req
@@ -295,6 +294,70 @@ router.get('/:spotId/reviews', async(req,res) => { //need to add reviewImage col
   })
   }
 })
+
+//CREATE BOOKING BASED ON SPOT ID
+router.post('/:spotId/bookings', requireAuth, async(req,res) => {
+  const { user } = req
+  const spot = await Spot.findByPk(req.params.spotId)
+  const {startDate, endDate} = req.body
+
+  if(spot){
+    if(spot.ownerId !== user.id){
+      const newBooking = await Booking.create({
+        startDate,endDate, userId: user.id, spotId: req.params.spotId
+      })
+      res.json(newBooking)
+    }
+    else{
+
+    }
+  }
+  else{
+    return res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+  })
+  }
+})
+
+
+
+
+//GET ALL BOOKINGS BASED ON SPOT ID
+router.get('/:spotId/bookings', requireAuth, async(req,res) => {
+  const { user } = req
+  const spot = await Spot.findByPk(req.params.spotId)
+
+  if(spot){
+    if(spot.ownerId === user.id){
+      const allBookings = await Booking.findAll({
+        where: {
+          spotId: req.params.spotId
+        },
+        include: {
+          model: user
+        }
+      })
+      res.json(allBookings)
+    }
+    else{
+      const allBookings = await Booking.findAll({
+        where: {
+          spotId: req.params.spotId
+        },
+        attributes: ['spotId', 'startDate', 'endDate']
+      })
+      res.json(allBookings)
+    }
+  }
+  else{
+    return res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+  })
+  }
+})
+
 
 
 module.exports = router;
