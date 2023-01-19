@@ -27,6 +27,37 @@ router.get('/current', requireAuth, async(req,res) => {
 })
 
 
+//EDIT A BOOKING
+router.put('/:bookingId', requireAuth, async(req,res) => { //still need same validation as create and cant edit if past booking date
+
+  const {startDate, endDate} = req.body
+  const booking = await Booking.findByPk(req.params.bookingId)
+
+  let start = Date.parse(startDate)
+  let end = Date.parse(endDate)
+
+  if (end <= start) {
+     res.json({
+      message: "Checkout date cannot be before the check-in date",
+      statusCode: 400
+    })
+  }
+
+  if(booking){
+    const editBooking = await Booking.update({
+     startDate,endDate
+    })
+    res.json(editBooking)
+  }
+  else {
+    res.statusCode = 404
+    res.json({
+      message: "Booking couldn't be found",
+      statusCode: 404
+    })
+  }
+})
+
 
 //DELETE A BOOKING
 router.delete('/:bookingid', requireAuth, async (req, res) => {

@@ -295,14 +295,15 @@ router.get('/:spotId/reviews', async(req,res) => { //need to add reviewImage col
   }
 })
 
-//CREATE BOOKING BASED ON SPOT ID
+//CREATE BOOKING BASED ON SPOT ID (still need booking conflict)
 router.post('/:spotId/bookings', requireAuth, async(req,res) => {
   const { user } = req
   const spot = await Spot.findByPk(req.params.spotId)
   const {startDate, endDate} = req.body
 
+  //check end date validation
   let start = Date.parse(startDate)
-  let end = Date.parse(endDate) 
+  let end = Date.parse(endDate)
 
   if (end <= start) {
      res.json({
@@ -310,7 +311,6 @@ router.post('/:spotId/bookings', requireAuth, async(req,res) => {
       statusCode: 400
     })
   }
-
 
   if(spot){
     if(user.id !== spot.ownerId){
