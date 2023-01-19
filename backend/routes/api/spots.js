@@ -301,15 +301,28 @@ router.post('/:spotId/bookings', requireAuth, async(req,res) => {
   const spot = await Spot.findByPk(req.params.spotId)
   const {startDate, endDate} = req.body
 
+  let start = Date.parse(startDate)
+  let end = Date.parse(endDate) 
+
+  if (end <= start) {
+     res.json({
+      message: "Checkout date cannot be before the check-in date",
+      statusCode: 400
+    })
+  }
+
+
   if(spot){
-    if(spot.ownerId !== user.id){
+    if(user.id !== spot.ownerId){
       const newBooking = await Booking.create({
         startDate,endDate, userId: user.id, spotId: req.params.spotId
       })
       res.json(newBooking)
     }
     else{
-
+      return res.json({
+        message: "Spot must NOT belong to the current user"
+    })
     }
   }
   else{

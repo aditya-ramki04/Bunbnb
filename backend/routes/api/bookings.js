@@ -27,6 +27,7 @@ router.get('/current', requireAuth, async(req,res) => {
 })
 
 
+
 //DELETE A BOOKING
 router.delete('/:bookingid', requireAuth, async (req, res) => {
     const { bookingid } = req.params
