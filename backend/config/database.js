@@ -20,3 +20,5 @@ module.exports = {
     }
   }
 };
+
+//allows loading database config env variables from .env to config/index.js

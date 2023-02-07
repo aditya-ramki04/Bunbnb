@@ -75,6 +75,103 @@ router.post('/', requireAuth, validateSpotInfo, async (req, res) => {
   res.json(newSpot)
 })
 
+//CREATE BOOKING BASED ON SPOT ID (still need booking conflict)
+router.post('/:spotId/bookings', requireAuth, async(req,res) => {
+  const { user } = req
+  const spot = await Spot.findByPk(req.params.spotId)
+  const {startDate, endDate} = req.body
+  let start = Date.parse(startDate)
+  let end = Date.parse(endDate)
+  let now = Date.now()
+
+  //check end date validation
+  if (end <= start) {
+     res.json({
+      message: "Checkout date cannot be before the check-in date",
+      statusCode: 400,
+      errors: {
+        "endDate": "End Date cannot before Start Date"
+      }
+    })
+  }
+
+  //start date validation
+  if (start < now) {
+    res.statusCode = 400
+    return res.json({
+      message: "Can't make a booking before today",
+      statusCode: 400,
+      errors: {
+        "Check-in": "Check-in can't be before today"
+      }
+    })
+  }
+
+  if(spot){
+    if(user.id !== spot.ownerId){
+
+      let startDateError = 0;
+      let endDateError = 0;
+      let bothDateError = 0;
+
+      const bookedDates = await Booking.findAll({
+        attributes: ["startDate", "endDate"]
+      })
+
+      for(let i = 0; i < bookedDates.length; i++){
+        if(start >=Date.parse(bookedDates[i].startDate) && start<=Date.parse(bookedDates[i].endDate)) startDateError++
+        else if(end >=Date.parse(bookedDates[i].startDate) && end <=Date.parse(bookedDates[i].endDate)) endDateError++
+        else if(start<=Date.parse(bookedDates[i].startDate) && end>=Date.parse(bookedDates[i].endDate)) bothDatesError++
+      }
+      if(bothDateError > 0){
+        return res.json({
+          message: "Sorry, this spot is already booked for the specified dates",
+          statusCode: 403,
+          errors: {
+            startDate: "Start date conflicts with an existing booking",
+            endDate: "End date conflicts with an existing booking"
+          }
+        })
+      }
+      else if(startDateError > 0){
+        return res.json({
+          message: "Sorry, this spot is already booked for the specified dates",
+          statusCode: 403,
+          errors: {
+            startDate: "Start date conflicts with an existing booking"
+          }
+        })
+      }
+
+      else if(EndDateError > 0){
+        return res.json({
+          message: "Sorry, this spot is already booked for the specified dates",
+          statusCode: 403,
+          errors: {
+            endDate: "End date conflicts with an existing booking"
+          }
+        })
+      }
+      //create new booking
+      const newBooking = await Booking.create({
+         userId: user.id, spotId: req.params.spotId,startDate,endDate
+      })
+      res.json(newBooking)
+    }
+    else{
+      return res.json({
+        message: "Spot must NOT belong to the current user"
+    })
+    }
+  }
+  else{
+    return res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+  })
+  }
+})
+
 //ADD IMAGE TO SPOT BASED ON SPOT ID
 router.post('/:spotId/images', requireAuth, async (req, res) => {
   const {user} = req
@@ -294,46 +391,6 @@ router.get('/:spotId/reviews', async(req,res) => { //need to add reviewImage col
   })
   }
 })
-
-//CREATE BOOKING BASED ON SPOT ID (still need booking conflict)
-router.post('/:spotId/bookings', requireAuth, async(req,res) => {
-  const { user } = req
-  const spot = await Spot.findByPk(req.params.spotId)
-  const {startDate, endDate} = req.body
-
-  //check end date validation
-  let start = Date.parse(startDate)
-  let end = Date.parse(endDate)
-
-  if (end <= start) {
-     res.json({
-      message: "Checkout date cannot be before the check-in date",
-      statusCode: 400
-    })
-  }
-
-  if(spot){
-    if(user.id !== spot.ownerId){
-      const newBooking = await Booking.create({
-        startDate,endDate, userId: user.id, spotId: req.params.spotId
-      })
-      res.json(newBooking)
-    }
-    else{
-      return res.json({
-        message: "Spot must NOT belong to the current user"
-    })
-    }
-  }
-  else{
-    return res.json({
-      message: "Spot couldn't be found",
-      statusCode: 404
-  })
-  }
-})
-
-
 
 
 //GET ALL BOOKINGS BASED ON SPOT ID
