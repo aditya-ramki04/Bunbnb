@@ -75,7 +75,7 @@ router.post('/', requireAuth, validateSpotInfo, async (req, res) => {
   res.json(newSpot)
 })
 
-//CREATE BOOKING BASED ON SPOT ID (still need booking conflict)
+//CREATE BOOKING BASED ON SPOT ID
 router.post('/:spotId/bookings', requireAuth, async(req,res) => {
   const { user } = req
   const spot = await Spot.findByPk(req.params.spotId)
@@ -143,7 +143,7 @@ router.post('/:spotId/bookings', requireAuth, async(req,res) => {
         })
       }
 
-      else if(EndDateError > 0){
+      else if(endDateError > 0){
         return res.json({
           message: "Sorry, this spot is already booked for the specified dates",
           statusCode: 403,
