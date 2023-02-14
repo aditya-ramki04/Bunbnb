@@ -118,6 +118,7 @@ router.post('/:spotId/bookings', requireAuth, async(req,res) => {
         attributes: ["startDate", "endDate"]
       })
 
+      //fix booking error (create booking based on spotId won't work, having issue with startDateError > 0 when it's not)
       for(let i = 0; i < bookedDates.length; i++){
         if(start >=Date.parse(bookedDates[i].startDate) && start<=Date.parse(bookedDates[i].endDate)) startDateError++
         else if(end >=Date.parse(bookedDates[i].startDate) && end <=Date.parse(bookedDates[i].endDate)) endDateError++

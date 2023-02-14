@@ -28,7 +28,7 @@ router.get('/current', requireAuth, async(req,res) => {
 
 
 //EDIT A BOOKING
-router.put('/:bookingId', requireAuth, async(req,res) => { 
+router.put('/:bookingId', requireAuth, async(req,res) => {
 
   const {startDate, endDate} = req.body
   const booking = await Booking.findByPk(req.params.bookingId)
@@ -106,7 +106,7 @@ router.put('/:bookingId', requireAuth, async(req,res) => {
 })
 
 
-//DELETE A BOOKING
+//DELETE A BOOKING (bug, requested resource cannot be found)
 router.delete('/:bookingid', requireAuth, async (req, res) => {
     const { bookingid } = req.params
     const booking = await Booking.findByPk(bookingid)

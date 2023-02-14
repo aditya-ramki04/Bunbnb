@@ -36,6 +36,7 @@ router.get('/current', requireAuth, async(req,res) => { //need to add reviewImag
       model: Spot,ReviewImage
     }
   })
+  res.json(allReviews)
 })
 
 //EDIT A REVIEW
