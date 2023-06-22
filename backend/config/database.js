@@ -1,6 +1,8 @@
+//env variables for development
 const config = require('./index');
 
 module.exports = {
+  //uses sqlite3 as dialect in development
   development: {
     storage: config.dbFile,
     dialect: "sqlite",
@@ -21,4 +23,4 @@ module.exports = {
   }
 };
 
-//allows loading database config env variables from .env to config/index.js
+//dotenv npx sequelize db:migrate

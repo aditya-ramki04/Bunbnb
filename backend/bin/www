@@ -1,8 +1,8 @@
 // Import environment variables
 require('dotenv').config();
-
+//gets backend port from config folder
 const { port } = require('../config');
-
+//gets express app with all its goodies
 const app = require('../app');
 const db = require('../db/models');
 

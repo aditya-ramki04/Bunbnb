@@ -1,3 +1,5 @@
+//inits express application
+
 const express = require('express');
 require('express-async-errors');
 const morgan = require('morgan');
@@ -7,15 +9,18 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { ValidationError } = require('sequelize');
 
+//checks enviornment key in config file /config/index.js to see if app is in production
 const { environment } = require('./config');
 const isProduction = environment === 'production';
 
+//inits express application
 const app = express();
+//connect morgan middeware to log info about requests and responses
 app.use(morgan('dev'));
 app.use(cookieParser());
+//parses incoming JSON reqs and puts it in req.body
 app.use(express.json());
 
-const routes = require('./routes');
 
 // Security Middleware
 if (!isProduction) {
@@ -41,6 +46,8 @@ if (!isProduction) {
     })
   );
 
+  //connects  routes from routes/index.js into express application
+  const routes = require('./routes');
   app.use(routes);
 
   //Error handling middleware
@@ -72,4 +79,5 @@ if (!isProduction) {
     });
   });
 
+  //exports express app
   module.exports = app;

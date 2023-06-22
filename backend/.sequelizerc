@@ -1,3 +1,5 @@
+//generates config and model using specified path
+
 const path = require('path');
 
 module.exports = {
