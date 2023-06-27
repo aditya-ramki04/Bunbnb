@@ -8,6 +8,7 @@ const { query } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const {user} = require('../../db/models/user');
 const { Op } = require('sequelize');
+const Sequelize = require("sequelize");
 
 const router = express.Router();
 
@@ -296,7 +297,7 @@ router.get('/', async(req,res) => {
       include: [
           [
             sequelize.fn("AVG", sequelize.col('Reviews.stars')), "avgRating"
-          ],
+          ]
       ],
     },
       include: {
@@ -305,6 +306,12 @@ router.get('/', async(req,res) => {
       },
       group: ['Spot.id']
   })
+
+  for(let i = 0; i < allSpots.length; i++){
+    allSpots[i].dataValues.previewImage = await SpotImage.findByPk((Number(allSpots[i].dataValues.id)-2),{
+      attributes: ['url']
+    })
+  }
   res.json(allSpots)
 })
 
