@@ -1,0 +1,40 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 75px;
+    border-bottom: 1px solid lightgray;
+}
+
+.logo {
+    font-weight: bold;
+    color: #FF5A60;
+    font-size: 25pt;
+    padding-left: 45px;
+}
+
+.profile{
+    padding-right: 45px;
+}
+
+.button {
+    width: 35px;
+    height: 35px;
+    background-color: transparent;
+}
+
+.profile-dropdown {
+    align-items: baseline;
+    display: flex;
+    position: absolute;
+    justify-content: space-evenly;
+    height: 150px;
+    width: 200px;
+    flex-direction: column;
+    background-color: white;
+    top: 70px;
+    right: 56px;
+    z-index: 1;
+    border-radius: 20px;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
+  }

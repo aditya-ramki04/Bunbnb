@@ -1,0 +1,29 @@
+.padding-container {
+    padding-top: 50px;
+    padding-left: 40px;
+    padding-right: 40px;
+
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+img {
+    height:325px;
+    width:325px;
+    border-radius: 10%;
+ }
+
+ .spot-container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 30px;
+}
+
+.firstRow {
+    display: flex;
+    justify-content: space-between;
+}

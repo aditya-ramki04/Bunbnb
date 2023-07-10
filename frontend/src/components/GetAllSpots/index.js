@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSpots } from "../../store/spots";
+import './allSpots.css'
 
 const SpotList = () => {
     const dispatch = useDispatch()
@@ -9,19 +10,29 @@ const SpotList = () => {
     useEffect(() => {
         dispatch(getAllSpots())
     }, [dispatch])
-
     return (
-        <>
+        <div className = 'padding-container'>
+        <div className = 'flex-container'>
         {spotList.map(spot => {
                 return (
-                    <>
-                    <img src = {spot.previewImage.url} alt='nothing provided'/>
-                    <div key = {spot.id}> {spot.city}, {spot.state}, {spot.avgRating}, {spot.price}, {spot.name}</div>
-                    </>
+                    <div className = 'spot-container'>
+                    <img src = {spot.previewImage.url} alt='no provided'/>
+                    <div className = 'firstRow'>
+                    <span>{spot.city}, {spot.state}</span>
+                    <span>
+                       {spot.avgRating === null ? ("No Reviews") : (Number(spot.avgRating).toFixed(2))}
+                    </span>
+                    </div>
+                    <div> {spot.name}</div>
+                    <div>{spot.price}</div>
+                    </div>
                 )
             })}
-        </>
+        </div>
+        </div>
     )
 }
+
+//{Number(spot.avgRating).toFixed(2)}
 
 export default SpotList

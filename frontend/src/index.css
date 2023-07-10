@@ -1,1 +1,8 @@
 /* TODO Add site wide styles */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat');
+
+li, a, button, div {
+    font-family: "Montserrat";
+
+
+}
