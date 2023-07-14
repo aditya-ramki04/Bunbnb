@@ -24,6 +24,12 @@ img {
 }
 
 .firstRow {
+    padding-top: 8px;
     display: flex;
     justify-content: space-between;
+    font-weight: bold;
+}
+
+.spot-price{
+    font-weight: bold;
 }

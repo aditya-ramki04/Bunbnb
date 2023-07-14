@@ -34,9 +34,9 @@ function ProfileButton({ user }) {
        <img className = "button" onClick={openMenu}src="https://img.icons8.com/material-rounded/24/000000/menu--v1.png" alt="menu--v1"></img>
       {showMenu && (
         <div className="profile-dropdown">
-          <div>My Spots</div>
-          <div>Wishlist</div>
-          <button className = 'menu-button' onClick={logout}>Log Out</button>
+         <button className = 'menu-button success'>My Spots</button>
+         <button className = 'menu-button success'>Wishlist</button>
+          <button className = 'menu-button success' onClick={logout}>Log Out</button>
         </div>
       )}
     </>

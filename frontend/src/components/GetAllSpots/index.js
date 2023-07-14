@@ -16,7 +16,7 @@ const SpotList = () => {
         {spotList.map(spot => {
                 return (
                     <div className = 'spot-container'>
-                    <img src = {spot.previewImage.url} alt='no provided'/>
+                    <img src = {spot.previewImage.url} alt=''/>
                     <div className = 'firstRow'>
                     <span>{spot.city}, {spot.state}</span>
                     <span>
@@ -24,7 +24,10 @@ const SpotList = () => {
                     </span>
                     </div>
                     <div> {spot.name}</div>
-                    <div>{spot.price}</div>
+                    <div>
+                        <span className = 'spot-price'>${spot.price}</span>
+                        <span> night</span>
+                        </div>
                     </div>
                 )
             })}
