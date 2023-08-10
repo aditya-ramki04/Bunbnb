@@ -1,4 +1,4 @@
-# Ashbnb
+# Bunbnb
 
 
 ## Bunbnb is a website clone, inspired by [Airbnb](https://www.airbnb.com/)
