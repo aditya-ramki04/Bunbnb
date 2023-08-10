@@ -11,8 +11,6 @@
 
 * [Database Schema](https://github.com/aditya-ramki04/Bunbnb/blob/dev/Airbnb%20Database%20Schema.png)
 
-* [Feature List](https://github.com/ashramki96/Airbnb-/wiki/Feature-List)
-
 
 This project is built with:
 
