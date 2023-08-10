@@ -37,9 +37,11 @@ This project is built with:
    `cd backend` :arrow_right: `npm start` <br>
    `cd frontend` :arrow_right: `npm start`
 
+## Features I'm Working On
+* Log in/Sign up page with authentication
+* Spot Details
+* Add/Delete Reviews
 
-## Features on the way
-
+## Future Features
 * Bookings
-* My Reviews page
-* My Spots page
+* Like/Save a spot
