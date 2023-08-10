@@ -1,20 +1,17 @@
 # Ashbnb
 
 
-## [Ashbnb](https://ashbnb.herokuapp.com/) is a website clone, inspired by [Airbnb](https://www.airbnb.com/)
+## [Bunbnb](link) is a website clone, inspired by [Airbnb](https://www.airbnb.com/)
 <p align ="center">
-<img src="https://iili.io/Zf4IwB.png"></img>
 </p>
 
 ### Links to project Wiki:
 
-* [API Routes Documentation](https://github.com/ashramki96/Airbnb-/wiki/API-Routes)
+* [API Routes Documentation](https://github.com/aditya-ramki04/Bunbnb/blob/dev/backend/README.md)
 
-* [Database Schema](https://github.com/ashramki96/Airbnb-/wiki/Database-Schema-Image)
+* [Database Schema](https://github.com/aditya-ramki04/Bunbnb/blob/dev/Airbnb%20Database%20Schema.png)
 
 * [Feature List](https://github.com/ashramki96/Airbnb-/wiki/Feature-List)
-
-* [Redux State Shape](https://github.com/ashramki96/Airbnb-/wiki/Redux-State-Shape)
 
 
 This project is built with:
@@ -31,7 +28,7 @@ This project is built with:
 
 1. Clone the repository
 
-   `git clone git@github.com:ashramki96/Airbnb-.git`
+   `git clone https://github.com/aditya-ramki04/Bunbnb.git`
 
 2. Install dependencies
 
@@ -42,24 +39,9 @@ This project is built with:
    `cd backend` :arrow_right: `npm start` <br>
    `cd frontend` :arrow_right: `npm start`
 
-## Login as a demo user to get started
-
-![](https://i.ibb.co/8K0GVsf/splashpagedemouser.png)
-
-## Create you first spot
-
-![](https://i.ibb.co/wQxkRqL/create-Aspot.png)
-
-## Made a typo? Edit your spot
-
-![](https://i.ibb.co/ByvkLpR/editspot.png)
-
-## Create a review on a spot you visited
-
-![](https://i.ibb.co/mNTsDq4/createreview.png)
 
 ## Features on the way
 
 * Bookings
 * My Reviews page
-* Search bar
+* My Spots page
