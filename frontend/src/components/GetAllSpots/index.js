@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSpots } from "../../store/spots";
 import './allSpots.css'
+import { NavLink } from "react-router-dom";
 
 const SpotList = () => {
     const dispatch = useDispatch()
@@ -10,12 +11,16 @@ const SpotList = () => {
     useEffect(() => {
         dispatch(getAllSpots())
     }, [dispatch])
+
+    if(!spotList) return null
+
     return (
         <div className = 'padding-container'>
         <div className = 'flex-container'>
         {spotList.map(spot => {
                 return (
                     <div className = 'spot-container'>
+                    <NavLink className = 'nav-link' key={spot.name} to={`/spots/${spot.id}`}>
                     <img src = {spot.previewImage.url} alt=''/>
                     <div className = 'firstRow'>
                     <span>{spot.city}, {spot.state}</span>
@@ -28,6 +33,7 @@ const SpotList = () => {
                         <span className = 'spot-price'>${spot.price}</span>
                         <span> night</span>
                         </div>
+                    </NavLink>
                     </div>
                 )
             })}
@@ -36,6 +42,5 @@ const SpotList = () => {
     )
 }
 
-//{Number(spot.avgRating).toFixed(2)}
 
 export default SpotList
