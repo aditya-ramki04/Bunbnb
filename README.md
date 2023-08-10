@@ -1,7 +1,7 @@
 # Ashbnb
 
 
-## [Bunbnb](link) is a website clone, inspired by [Airbnb](https://www.airbnb.com/)
+## [Bunbnb] is a website clone, inspired by [Airbnb](https://www.airbnb.com/)
 <p align ="center">
 </p>
 
