@@ -277,7 +277,7 @@ spotDetails.avgStarRating = (await Review.sum(('stars'),{ //alright tristan
 })) / spotDetails.numReviews;
 
   //SpotImages
-  spotDetails.SpotImages = await SpotImage.findByPk(Number(spotInfo.ownerId),{
+  spotDetails.SpotImages = await SpotImage.findByPk((Number(spotInfo.id)-2),{
     attributes: ['id', 'url','preview']
   })
 

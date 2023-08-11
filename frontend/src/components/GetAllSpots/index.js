@@ -4,13 +4,16 @@ import { getAllSpots } from "../../store/spots";
 import './allSpots.css'
 import { NavLink } from "react-router-dom";
 
+
 const SpotList = () => {
     const dispatch = useDispatch()
+
     const spotList = useSelector((state) => Object.values(state.spots))
 
     useEffect(() => {
-        dispatch(getAllSpots())
+        dispatch(getAllSpots());
     }, [dispatch])
+
 
     if(!spotList) return null
 
@@ -21,7 +24,7 @@ const SpotList = () => {
                 return (
                     <div className = 'spot-container'>
                     <NavLink className = 'nav-link' key={spot.name} to={`/spots/${spot.id}`}>
-                    <img src = {spot.previewImage.url} alt=''/>
+                    <img src={spot.previewImage?.url} alt=''/>
                     <div className = 'firstRow'>
                     <span>{spot.city}, {spot.state}</span>
                     <span>
@@ -41,6 +44,4 @@ const SpotList = () => {
         </div>
     )
 }
-
-
 export default SpotList

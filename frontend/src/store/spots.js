@@ -1,4 +1,4 @@
-import { csrfFetch } from './csrf'
+//import { csrfFetch } from './csrf'
 
 const GET_SPOTS = 'spots/getSpots'
 const GET_ONE_SPOT = 'spots/getOneSpot'
@@ -45,8 +45,9 @@ const spotsReducer = (state = initalState, action) => {
     switch (action.type){
         case GET_SPOTS:
             const allSpots = {}
-            action.spots.forEach(spot => {allSpots[spot.id] = spot});
+            action.spots.forEach(spot => {allSpots[spot.id] = spot})
             return {
+                ...state,
                 ...allSpots
             }
         case GET_ONE_SPOT:
