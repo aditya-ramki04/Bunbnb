@@ -19,6 +19,7 @@ const SpotDetails = () => {
     const reviewList = useSelector(state => Object.values(state.reviews))
 
     const spot = spotList.find(spot => spot.id === Number(spotId))
+    const reviews = reviewList.filter(review => review.spotId === Number(spotId))
     if (!spot) return null
 
     function randInt(max) {
@@ -41,7 +42,7 @@ const SpotDetails = () => {
             </div>
         <div>{spot.description}</div>
         <div>
-        {reviewList.map(review => {
+        {reviews.map(review => {
             return (
                 <div> {review.review}</div>
             )

@@ -24,6 +24,11 @@ function Navigation({ isLoaded }){
   return (
       <nav className = 'navbar'>
         <NavLink style={{textDecoration: 'none'}} className = 'logo' exact to="/">bunbnb</NavLink>
+        <div className = 'create-spot-button'>
+          <NavLink to="/host" className="nav-link-button">
+            Bunbnb Your Home
+          </NavLink>
+          </div>
         <div className = 'profile'>{isLoaded && sessionLinks}</div>
       </nav>
 
