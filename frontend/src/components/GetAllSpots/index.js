@@ -24,7 +24,7 @@ const SpotList = () => {
                 return (
                     <div className = 'spot-container'>
                     <NavLink className = 'nav-link' key={spot.name} to={`/spots/${spot.id}`}>
-                    <img src={spot.previewImage?.url} alt=''/>
+                    <img src={spot.previewImage} alt=''/>
                     <div className = 'firstRow'>
                     <span>{spot.city}, {spot.state}</span>
                     <span>

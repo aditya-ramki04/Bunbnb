@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { getOneSpot } from "../../store/spots"
+import { getAllSpots, getOneSpot } from "../../store/spots"
 import { getAllReviews } from "../../store/reviews";
+import { deleteSpot } from "../../store/spots";
 import './spotDetails.css'
 
 
 const SpotDetails = () => {
     const dispatch = useDispatch()
     const { spotId } = useParams()
+
+    const sessionUser = useSelector(state => state.session.user)
 
     useEffect(() => {
         dispatch(getOneSpot(spotId))
@@ -26,13 +29,23 @@ const SpotDetails = () => {
         return (Math.floor(Math.random() * max) + 1);
       }
 
-    console.log(reviewList)
+      const handleDelete = () => {
+        dispatch(deleteSpot(spotId)).then(() => dispatch(getAllSpots()))
+    }
+
+    //ids
+    const spotOwnerId = spot.ownerId
+    let sessionUserId
+    if (sessionUser) {
+        sessionUserId = sessionUser.id;
+    }
 
     return(
         <>
         <div className = 'flex-container1'>
         <div>{spot.name}</div>
-        <span>{spot.avgStarRating}, {spot.numReviews} Reviews, {spot.address}, {spot.city}, {spot.state}</span>
+        <span>{spot.avgStarRating === null ? ("No Reviews") : (Number(spot.avgStarRating).toFixed(2))}</span>
+        <span>{spot.numReviews} Reviews, {spot.address}, {spot.city}, {spot.state}</span>
         <div></div>
         <img className = 'img1' src={spot.SpotImages?.url} alt=''/>
         <div>Hosted by {spot.owner?.username}</div>
@@ -48,6 +61,8 @@ const SpotDetails = () => {
             )
         })}
         </div>
+        {sessionUserId && sessionUserId === spotOwnerId ?
+            <button onClick={handleDelete}>Delete Spot</button> : null}
         </div>
         </>
     )

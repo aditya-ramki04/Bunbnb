@@ -25,7 +25,7 @@ const CreateSpot = () => {
         e.preventDefault();
 
         const spotData = { address, city, state, country, lat, lng, name, description, price}
-        const imgData = {imgUrl}
+        const imgData = {url: imgUrl, preview: true}
 
         //errors
         let errors = []
@@ -59,9 +59,8 @@ const CreateSpot = () => {
 
         setErrors(errors)
 
-        if(errors.length === 0) {
-            const newSpot = dispatch(createSpot(spotData, imgData))
-        }
+        dispatch(createSpot(spotData, imgData))
+
     }
 
     return (
@@ -85,7 +84,64 @@ const CreateSpot = () => {
           onChange={(e) => setCity(e.target.value)}
           required
         />
-
+        <input
+          type="text"
+          placeholder="State"
+          value={state}
+          onChange={(e) => setState(e.target.value)}
+          required
+        />
+         <input
+          type="text"
+          placeholder="Country"
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+          required
+        />
+        <input
+          type="number"
+          placeholder="Latitude"
+          value={lat}
+          onChange={(e) => setLat(e.target.value)}
+          required
+        />
+         <input
+          type="number"
+          placeholder="Longitude"
+          value={lng}
+          onChange={(e) => setLng(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        />
+        <input
+          type="number"
+          placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          required
+        />
+        <input
+              placeholder = "Image url"
+              required
+              type="string"
+              value={imgUrl}
+              onChange={(e) => setImgUrl(e.target.value)}/>
+         <button type='submit' disabled = {errors.length > 0}>
+            Create Spot
+        </button>
         </form>
         </div>
     )

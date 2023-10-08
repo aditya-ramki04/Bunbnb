@@ -184,9 +184,9 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     if(user.id === spot.ownerId)
     {
       const newSpotImage = await SpotImage.create({
-        url,preview,spotId: req.params.spotId
+        url,preview: preview,spotId: req.params.spotId
       })
-      res.json(newSpotImage)
+      return res.json({ id: newSpotImage.id, url: newSpotImage.url, preview: newSpotImage.preview })
     }
     else
     res.json('Spot must belong to current user')
@@ -308,9 +308,13 @@ router.get('/', async(req,res) => {
   })
 
   for(let i = 0; i < allSpots.length; i++){
-    allSpots[i].dataValues.previewImage = await SpotImage.findByPk((Number(allSpots[i].dataValues.id)-2),{
-      attributes: ['url']
-    })
+    const imageDetails = await allSpots[i].getSpotImages({where: {preview: true}, attributes: ["url"], raw: true, nest: true })
+    let pImage
+    if(imageDetails.length > 0){
+      pImage = imageDetails[0].url
+    }
+    else pImage = ""
+    allSpots[i].dataValues.previewImage = pImage
   }
   res.json(allSpots)
 })
