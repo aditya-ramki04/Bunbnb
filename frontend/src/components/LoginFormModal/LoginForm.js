@@ -22,7 +22,7 @@ function LoginForm() {
 
   return (
     <>
-    <div className = 'firstrow'>Log in or Sign Up</div>
+    <div className = 'firstrow'>Log in</div>
     <div className = 'welcome'>Welcome to <span className="bunbnb">Bunbnb</span></div>
 
     <form onSubmit={handleSubmit} className = 'form-container'>
@@ -33,13 +33,13 @@ function LoginForm() {
       </ul>
         <input
           type="text"
-          placeholder="username / email"
+          placeholder="Username / Email"
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
           required
         />
         <input
-          placeholder="password"
+          placeholder="Password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}

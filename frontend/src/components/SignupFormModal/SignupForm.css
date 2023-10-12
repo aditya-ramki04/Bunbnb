@@ -1,0 +1,55 @@
+.form-container{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+}
+
+.firstrow {
+    font-family: 'Montserrat';
+    text-align: center;
+    border-bottom: #e0e0e0 1px solid;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.welcome {
+    font-family: 'Montserrat';
+    padding-left: 20px;
+    padding-top: 18px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.bunbnb {
+    font-weight: bold;
+    color: #FF5A60;
+}
+input {
+   display: flex;
+   font-size: 15px;
+   font-family: "Montserrat";
+   justify-content: center;
+   margin-left: 20px;
+   margin-right: 20px;
+   margin-bottom: 20px;
+   padding: 13px;
+   border: 1px solid grey;
+   border-radius: 6px;
+}
+
+.signup {
+    font-size: 15px;
+   font-family: "Montserrat";
+   justify-content: center;
+   margin-left: 20px;
+   margin-right: 20px;
+   margin-bottom: 20px;
+   padding: 13px;
+   border-radius: 6px;
+   border:transparent;
+   cursor: pointer;
+   background-color: #FF5A60;;
+   color: white;
+}
