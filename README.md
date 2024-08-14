@@ -21,7 +21,8 @@ This project is built with:
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
 
-
+##Home Page
+![alt text](https://github.com/aditya-ramki04/Bunbnb/images/image.png)
 ## Run the app locally
 
 1. Clone the repository
