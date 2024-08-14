@@ -22,7 +22,7 @@ This project is built with:
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
 
 ##Home Page
-![alt text](https://github.com/aditya-ramki04/Bunbnb/images/image.png)
+![alt text](https://github.com/aditya-ramki04/Bunbnb/blob/dev/images/image.png)
 ## Run the app locally
 
 1. Clone the repository
