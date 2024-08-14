@@ -10,15 +10,21 @@ function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
   let sessionLinks;
+  let createSpotForm
   if (sessionUser) {
     sessionLinks = (
       <ProfileButton user={sessionUser} />
+    )
+    createSpotForm = (
+      <NavLink to="/host" className="nav-link-button">
+            Bunbnb Your Home
+          </NavLink>
     );
   } else {
     sessionLinks = (
       <>
-        <LoginFormModal />
-        <SignupFormModal />
+      <LoginFormModal/>
+      <SignupFormModal />
       </>
     );
   }
@@ -27,9 +33,7 @@ function Navigation({ isLoaded }){
       <nav className = 'navbar'>
         <NavLink style={{textDecoration: 'none'}} className = 'logo' exact to="/">bunbnb</NavLink>
         <div className = 'create-spot-button'>
-          <NavLink to="/host" className="nav-link-button">
-            Bunbnb Your Home
-          </NavLink>
+          {createSpotForm}
           </div>
         <div className = 'profile'>{isLoaded && sessionLinks}</div>
       </nav>

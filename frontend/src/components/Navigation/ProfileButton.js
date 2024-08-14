@@ -2,9 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import { NavLink } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import LoginFormModal from '../LoginFormModal';
+import SignupFormModal from '../SignupFormModal';
 import './navigation.css'
 
 function ProfileButton({ user }) {
+  const sessionUser = useSelector(state => state.session.user);
+  let userProfileButton;
+
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
 
@@ -30,8 +36,9 @@ function ProfileButton({ user }) {
     dispatch(sessionActions.logout());
   };
 
-  return (
-    <>
+  if(sessionUser){
+    userProfileButton = (
+      <>
        <img className = "button" onClick={openMenu}src="https://img.icons8.com/material-rounded/24/000000/menu--v1.png" alt="menu--v1"></img>
       {showMenu && (
         <div className="profile-dropdown">
@@ -43,6 +50,23 @@ function ProfileButton({ user }) {
         </div>
       )}
     </>
+    )
+  }
+  else{
+    userProfileButton = (
+      <>
+       <img className = "button" onClick={openMenu}src="https://img.icons8.com/material-rounded/24/000000/menu--v1.png" alt="menu--v1"></img>
+      {showMenu && (
+        <div className="profile-dropdown">
+          <LoginFormModal/>
+          <SignupFormModal />
+        </div>
+      )}
+    </>
+    )
+  }
+  return (
+    <div>{userProfileButton}</div>
   );
 }
 
